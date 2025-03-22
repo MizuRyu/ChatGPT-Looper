@@ -36,3 +36,10 @@ artifacts
 
 # Testing
 talkingheads_userprofile
+
+.DS_Store
+
+# dev
+.env
+.gitignore
+/venv

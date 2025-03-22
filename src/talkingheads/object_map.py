@@ -6,9 +6,9 @@ markers = EasyDict(
     {
         "ChatGPT": {
             "login_xq"      : "//button[@data-testid='login-button']",
-            "email_xq"     : "//input[contains(@class, 'email-input') or @id='username']",
+            "email_xq"     : "//input[contains(@class, 'email-input') or @id='email-input']",
             "pwd_iq"        : "password",
-            "continue_xq"   : "//button[text()='Continue']",
+            "continue_xq"   : "//input[@value='続ける'] | //button[text()='続ける']",
             "tutorial_xq"   : "//div[contains(text(), 'Okay, let’s go')]",
             "button_tq"     : "button",
             "done_xq"       : "//button[//div[text()='Done']]",
