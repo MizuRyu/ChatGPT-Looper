@@ -90,7 +90,7 @@ class MultiAgent:
             result = OrderedDict(executor.map(lambda_func, *zip(*dictionary.items())))
         return result
 
-    def open_agent(self, client_name: str, config: Dict[str, str]) -> BaseBrowser:
+    def open_agent(self, client_key: str, config: Dict[str, str]) -> BaseBrowser:
         """Open the given client
 
         Args:
@@ -101,6 +101,7 @@ class MultiAgent:
             BaseBrowser: The agent object
         """
         time.sleep(random() * randint(1, 4))
+        client_name = config.pop("model_type", client_key)
         client_constructor = get_client(client_name)
         return client_constructor(**config)
 

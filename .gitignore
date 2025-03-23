@@ -43,3 +43,4 @@ talkingheads_userprofile
 .env
 .gitignore
 /venv
+/config/config.yaml

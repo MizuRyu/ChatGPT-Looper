@@ -1,0 +1,23 @@
+driver_settings:
+  shared: # selenium 共通設定
+    verbose: true
+    headless: false
+    incognito: false
+    skip_login: true
+  nodes:
+    ChatGPT: # 同じモデルを使用する場合は、ChatGPT_1, ChatGPT_2 のように記載
+      model_type: "ChatGPT"
+      auto_save: false # 各Client自身のauto_saveはオフ
+      user_data_dir: "<your-user-data-dir>"
+      driver_arguments: "[<your-driver-arguments>]"
+    Gemini:
+      tag: "agentB"
+      model_type: "Gemini"
+      auto_save: false
+      user_data_dir: "<your-user-data-dir>"
+      driver_arguments: "[<your-driver-arguments>]"
+
+# 全エージェント共通設定
+multiagent_settings:
+  auto_save: true # MultiAgent側でやり取り全体のログを保存するか
+  save_path: "logs.csv" # ログの出力ファイル

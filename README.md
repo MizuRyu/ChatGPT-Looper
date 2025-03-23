@@ -13,3 +13,8 @@ source venv/bin/activate
 pip install -e .
 pip install python-dotenv
 ```
+
+### 注意
+* User Profile Data (user_data_dir) は共有不可のため、コピーして作成する必要がある。
+* 実行時、chrome のプロセスをすべてkillする必要がある
+    * `pkill -f "Google Chrome"`
