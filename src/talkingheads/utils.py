@@ -75,6 +75,12 @@ def is_url(possible_url: str) -> bool:
     """
     return validators.url(possible_url)
 
+def remove_non_bmp(text: str) -> str:
+    """
+    コンテキストにBMP外の文字（絵文字など）が含まれている場合、削除
+    """
+    return ''.join(c for c in text if ord(c) <= 0xFFFF)
+
 
 save_func_map = {
     "csv": "to_csv",

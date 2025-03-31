@@ -51,6 +51,10 @@ agent_B_instruction = """
 できるだけ、アイデアどんどん深掘りして。浅く広くにならんように、たくさんアイデアきてもまず少数に絞って議論展開して。
 """
 
+common_instruction = """
+* 絵文字の生成は禁止。
+"""
+
 conversation_times = 50
 
 a_tmp_response = ""

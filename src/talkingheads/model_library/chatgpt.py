@@ -10,6 +10,7 @@ from selenium.webdriver.support import expected_conditions as EC
 import selenium.common.exceptions as Exceptions
 
 from .. import BaseBrowser
+from ..utils import remove_non_bmp
 
 
 class ChatGPTClient(BaseBrowser):
@@ -136,32 +137,31 @@ class ChatGPTClient(BaseBrowser):
         return False
 
     def get_last_response(
-        self, num_step: int = 200, period: float = 0.5, same_answer_limit=3
+        self, num_step: int = 200, period: float = 0.5, same_answer_limit=5
     ) -> str:
         """
-        Continuously checks for a response in a chatbox-like element and
-            returns the last received response.
+        チャットボックス要素から最新の応答を継続的に確認し、最終的な応答を返します。
 
-        Args:
-            num_step (int): Number of cycles to check for updates to the response.
-                Defaults to 200.
-            period (float): Sleep time between each step, representing the delay between each check.
-                Defaults to 0.5 seconds.
-            same_answer_limit (int): The maximum number of times the same response can
-                be observed before concluding that the response is complete. Defaults to 3.
+        引数:
+            num_step (int): 応答の更新を確認するサイクル数。
+                デフォルトは200回。
+            period (float): 各確認間の待機時間（秒）。
+                デフォルトは0.5秒。
+            same_answer_limit (int): 応答が完了したと判断するために、
+                同じ応答を観測できる最大回数。デフォルトは3回。
 
-        Returns:
-            str: The last valid response from the chatbox element.
-                If no response is found, an empty string is returned.
+        戻り値:
+            str: チャットボックス要素から取得した最新の有効な応答。
+                応答が見つからない場合は空文字列を返します。
 
-        Behavior:
-            - The function first waits for the chatbox element to appear on the page.
-            - It continuously checks for updates to the response in the chatbox.
-            - The response is checked continuously, `period` seconds between each check.
-            - If the response remains the same for more than `same_answer_limit` consecutive times,
-                the loop breaks, assuming the response is complete.
-            - If no response is found, it returns an empty string.
-            - If a response is found, it returns the last detected response.
+        動作:
+            - まずページ上にチャットボックス要素が表示されるのを待ちます。
+            - チャットボックス内の応答の更新を継続的に確認します。
+            - 応答は各確認間に`period`秒の間隔を置いて継続的にチェックされます。
+            - 応答が`same_answer_limit`回連続で同じ内容であれば、
+            応答が完了したと判断してループを終了します。
+            - 応答が見つからない場合は空文字列を返します。
+            - 応答が見つかった場合は、最後に検出された応答を返します。
         """
 
         self.logger.info("Checking the response")
@@ -210,7 +210,8 @@ class ChatGPTClient(BaseBrowser):
                 "Unable to find the text prompt area. Please raise an issue with verbose=True"
             )
         for each_line in prompt.split("\n"):
-            text_area.send_keys(each_line)
+            cleaned_line = remove_non_bmp(each_line)
+            text_area.send_keys(cleaned_line)
             text_area.send_keys(Keys.SHIFT + Keys.ENTER)
         text_area.send_keys(Keys.RETURN)
 
